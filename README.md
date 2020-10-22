@@ -1,4 +1,7 @@
-# 十次方社交系统
+## 十次方社交系统
+
+### 静态演示网站
+http://itxinfei.gitee.io/tensquare-parent
 
 模块名称 模块中文名称
 - tensquare_common 公共模块
