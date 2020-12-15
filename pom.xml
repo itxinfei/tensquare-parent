@@ -2,37 +2,38 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.1.RELEASE</version>
         <relativePath/>
     </parent>
-
     <groupId>com.tensquare</groupId>
-    <artifactId>tensquare_parent</artifactId>
+    <artifactId>tensquare-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>tensquare_parent</name>
+    <name>tensquare-parent</name>
     <description>十次方项目</description>
 
     <modules>
-        <module>tensquare_common</module>
-        <module>tensquare_base</module>
-        <module>tensquare_recruit</module>
-        <module>tensquare_qa</module>
-        <module>tensquare_article</module>
-        <module>tensquare_gathering</module>
-        <module>tensquare_spit</module>
-        <module>tensquare_search</module>
-        <module>tensquare_user</module>
-        <module>tensquare_sms</module>
-        <module>tensquare_eureka</module>
-        <module>tensquare_friend</module>
-        <module>tensquare_web</module>
-        <module>tensquare_manager</module>
-        <module>tensquare_config</module>
+        <module>tensquare-common</module>
+        <module>tensquare-base</module>
+        <module>tensquare-recruit</module>
+        <module>tensquare-qa</module>
+        <module>tensquare-article</module>
+        <module>tensquare-gathering</module>
+        <module>tensquare-spit</module>
+        <module>tensquare-search</module>
+        <module>tensquare-user</module>
+        <module>tensquare-sms</module>
+        <module>tensquare-eureka</module>
+        <module>tensquare-friend</module>
+        <module>tensquare-web-gateway</module>
+        <module>tensquare-manager-gateway</module>
+        <module>tensquare-config</module>
+        <module>tensquare-ai</module>
+        <module>tensquare-article-crawler</module>
+        <module>tensquare-user-crawler</module>
     </modules>
 
     <properties>
@@ -41,7 +42,7 @@
         <java.version>1.8</java.version>
     </properties>
 
-    <dependencies>
+    <!--<dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -51,7 +52,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-    </dependencies>
+    </dependencies>-->
 
     <repositories>
         <repository>
