@@ -5,14 +5,13 @@ import org.deeplearning4j.models.embeddings.loader.WordVectorSerializer;
 import org.deeplearning4j.models.embeddings.wordvectors.WordVectors;
 import org.deeplearning4j.nn.graph.ComputationGraph;
 import org.deeplearning4j.util.ModelSerializer;
-import org.nd4j.linalg.api.rng.Random;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 人工智能分类模型

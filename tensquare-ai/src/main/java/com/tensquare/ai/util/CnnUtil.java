@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-
 /**
  * CNN工具类
  */
@@ -80,7 +79,7 @@ public class CnnUtil {
      */
     public static DataSetIterator getDataSetIterator(String path, String[] childPaths, WordVectors wordVectors, int minibatchSize, int maxSentenceLength, Random rng) {
         //词标记分类比标签
-        Map<String, List> reviewFilesMap = new HashMap<>();
+        Map<String, List<File>> reviewFilesMap = new HashMap<>();
         for (String childPath : childPaths) {
             reviewFilesMap.put(childPath, Arrays.asList(new
                     File(path + "/" + childPath).listFiles()));

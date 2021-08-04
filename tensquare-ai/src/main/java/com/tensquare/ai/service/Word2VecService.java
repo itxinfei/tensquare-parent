@@ -17,6 +17,7 @@ import java.util.List;
  */
 @Service
 public class Word2VecService {
+
     //模型分词路径
     @Value("${ai.wordLib}")
     private String wordLib;
@@ -43,8 +44,10 @@ public class Word2VecService {
 
     /**
      * 根据分词模型生成 词向量模型
+     *
+     * @return
      */
-    public void build() {
+    public boolean build() {
         boolean flag = false;
         try {
             //加载数爬虫分词数据集
@@ -69,4 +72,4 @@ public class Word2VecService {
     }
 }
 
-}
+

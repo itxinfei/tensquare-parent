@@ -75,8 +75,20 @@
         </dependency>
         <dependency>
             <groupId>org.deeplearning4j</groupId>
-            <artifactId>deeplearning4j-ui</artifactId>
+            <artifactId>deeplearning4j-ui_2.11</artifactId>
             <version>${dl4j-master.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.module</groupId>
+                    <artifactId>jackson-module-scala_2.11</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Jackson Module -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-scala_2.11</artifactId>
+            <version>2.12.2</version>
         </dependency>
         <dependency>
             <groupId>org.deeplearning4j</groupId>
@@ -86,7 +98,7 @@
         <!-- ParallelWrapper & ParallelInference live here -->
         <dependency>
             <groupId>org.deeplearning4j</groupId>
-            <artifactId>deeplearning4j-parallel-wrapper</artifactId>
+            <artifactId>deeplearning4j-parallel-wrapper_2.11</artifactId>
             <version>${dl4j-master.version}</version>
         </dependency>
         <!-- Used in the feedforward/classification/MLP* and feedforward/regression/RegressionMathFunctions example -->

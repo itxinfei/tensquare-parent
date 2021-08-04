@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * 签权的拦截器
  */
 @Component
-public class JwtFilter extends HandlerInterceptorAdapter{
+public class JwtFilter extends HandlerInterceptorAdapter {
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -25,27 +25,27 @@ public class JwtFilter extends HandlerInterceptorAdapter{
 
         String auth = request.getHeader("Authorization");
 
-        System.out.println("auth="+auth);
+        System.out.println("auth=" + auth);
 
-        if(auth!=null){
+        if (auth != null) {
 
-            if(auth.startsWith("Bearer ")){
+            if (auth.startsWith("Bearer ")) {
                 String token = auth.substring(7);
                 //解析token
                 Claims claims = jwtUtil.parseJWT(token);
 
-                if(claims!=null){
+                if (claims != null) {
 
                     //如果当前角色是管理员
-                    if("admin".equals(claims.get("roles"))){
+                    if ("admin".equals(claims.get("roles"))) {
                         //存入标记
-                        request.setAttribute("admin_claims",claims);
+                        request.setAttribute("admin_claims", claims);
                     }
 
                     //如果当前角色是普通用户
-                    if("user".equals(claims.get("roles"))){
+                    if ("user".equals(claims.get("roles"))) {
                         //存入标记
-                        request.setAttribute("user_claims",claims);
+                        request.setAttribute("user_claims", claims);
                     }
                 }
             }

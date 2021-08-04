@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tensquate-base</artifactId>
+    <artifactId>tensquare-base</artifactId>
 
     <dependencies>
         <dependency>

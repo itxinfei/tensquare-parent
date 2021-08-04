@@ -22,11 +22,48 @@
   </a> 
 </p>
 
+#### 一、项目介绍
+《十次方社交系统》采用目前主流的微服务系统架构SpringBoot+SpringCloud+SpringData进行开发，前端技术采用Vue.js 。系统整体分为三大部分：微服务、网站前台、网站管理后台。功能模块包括文章、问答、招聘、活 动、吐槽、交友、用户中心、搜索中心及第三方登陆等。《十次方社交系统》项目融合了Docker容器化部署、第三方登陆、SpringBoot、SpringCloud、SpringData 、人工智能、爬虫、RabbitMQ等技术。
 
-### 静态网站
-http://itxinfei.gitee.io/tensquare-parent
+#### 二、项目架构
 
-模块名称 模块中文名称
+##### 1、技术架构
+
+![输入图片说明](doc/技术架构.jpg)
+
+##### 2、功能架构
+
+![](doc/功能架构.jpg)
+
+##### 3、分离架构
+![](doc/分离架构.jpg)
+
+
+##### 4、智能推荐
+![](doc/智能推荐.jpg)
+
+
+##### 5、爬虫与智能分类
+![](doc/爬虫与智能分类.jpg)
+
+
+
+
+#### 三、项目截图
+
+##### 1、项目首页
+
+![](doc/项目首页.jpg)
+
+##### 2、后台管理页面
+
+![](doc/后台管理登录页面.jpg)
+
+
+
+#### 四、项目模块
+
+##### 1、后端模块
 - tensquare-common 公共模块
 - tensquare-article 文章微服务
 - tensquare-base 基础微服务
@@ -37,8 +74,8 @@ http://itxinfei.gitee.io/tensquare-parent
 - tensquare-user 用户微服务
 - tensquare-spit 吐槽微服务
 - tensquare-search 搜索微服务
-- tensquare-web 前台微服务网关
-- tensquare-manager 后台微服务网关
+- tensquare-web-gateway 前台微服务网关
+- tensquare-manager-gateway 后台微服务网关
 - tensquare-eureka 注册中心
 - tensquare-config 配置中心
 - tensquare-sms 短信微服务
@@ -46,8 +83,16 @@ http://itxinfei.gitee.io/tensquare-parent
 - tensquare-user-crawler 用户爬虫微服务
 - tensquare-ai 人工智能微服务
 
-#### 介绍
-《十次方社交系统》采用目前主流的微服务系统架构SpringBoot+SpringCloud+SpringData进行开发，前端技术采用Vue.js 。系统整体分为三大部分：微服务、网站前台、网站管理后台。功能模块包括文章、问答、招聘、活 动、吐槽、交友、用户中心、搜索中心及第三方登陆等。《十次方社交系统》项目融合了Docker容器化部署、第三方登陆、SpringBoot、SpringCloud、SpringData 、人工智能、爬虫、RabbitMQ等技术。
+##### 2、前端页面
+- tensquare-portal  前端页面
+- tensquare-manager 后台管理
 
-#### 软件架构
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0617/160820_103df390_800553.png "十次方架构.png")
+##### 3、数据设计
+- tensquare_article 文章
+- tensquare_base 基础
+- tensquare_friend 交友
+- tensquare_gathering 活动
+- tensquare_qa 问答
+- tensquare_recruit 招聘
+- tensquare_user 用户
+- tensquare_spit 吐槽
