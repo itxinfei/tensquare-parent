@@ -11,7 +11,7 @@ import util.JwtUtil;
 /**
  * @author Administrator
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class)
 @EnableEurekaClient
 public class UserApplication {
 
@@ -28,13 +28,16 @@ public class UserApplication {
     }
 
     /**
-     * 初始化工具类
+     * 初始化加密工具类
      */
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * 初始化jwt签发token
+     */
     @Bean
     public JwtUtil jwtUtil() {
         return new JwtUtil();

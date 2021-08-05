@@ -1,21 +1,15 @@
 package com.tensquare.user.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Selection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +18,7 @@ import util.IdWorker;
 
 import com.tensquare.user.dao.AdminDao;
 import com.tensquare.user.pojo.Admin;
+import util.JwtUtil;
 
 /**
  * 服务层
@@ -48,7 +43,6 @@ public class AdminService {
         return adminDao.findAll();
     }
 
-
     /**
      * 条件查询+分页
      *
@@ -62,7 +56,6 @@ public class AdminService {
         PageRequest pageRequest = PageRequest.of(page - 1, size);
         return adminDao.findAll(specification, pageRequest);
     }
-
 
     /**
      * 条件查询
@@ -82,11 +75,19 @@ public class AdminService {
      * @return
      */
     public Admin findById(String id) {
-        return adminDao.findById(id).get();
+        Optional<Admin> admin = adminDao.findById(id);
+        if (admin.isPresent()) {
+            return adminDao.findById(id).get();
+        } else {
+            return null;
+        }
     }
 
     @Autowired
     private BCryptPasswordEncoder cryptPasswordEncoder;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     /**
      * 增加
@@ -95,10 +96,10 @@ public class AdminService {
      */
     public void add(Admin admin) {
         admin.setId(idWorker.nextId() + "");
-
         //对密码进行BCrypt加密
         admin.setPassword(cryptPasswordEncoder.encode(admin.getPassword()));
-
+        System.out.println("加密后的：" + admin.toString());
+        System.out.println("反转密码：" + cryptPasswordEncoder.matches("admin", admin.getPassword()));
         adminDao.save(admin);
     }
 
@@ -159,22 +160,19 @@ public class AdminService {
 
     /**
      * 管理员登录
-     *
-     * @param map
-     * @return
      */
     public Admin login(Map<String, String> map) {
-        System.out.println(map.toString());
-
         //1.判断账户是否存在
-        Admin admin = adminDao.findByLoginname(map.get("loginname"));
-
-        //2.判断密码是否正确
-        if (admin != null && cryptPasswordEncoder.matches(map.get("password"), admin.getPassword())) {
+        Admin admin = adminDao.findByLoginname(map.get("username"));
+        System.out.println("账号：" + admin.getLoginname() + "密码：" + admin.getPassword());
+        //2.判断密码是否正确，第一个参数为明文！！！，第二个参数才是密文 ！admin != null &&
+        if (cryptPasswordEncoder.matches(map.get("password"), admin.getPassword())) {
             //成功
+            System.out.println("登录成功");
             return admin;
         } else {
             //失败
+            System.out.println("登录失败!");
             return null;
         }
     }

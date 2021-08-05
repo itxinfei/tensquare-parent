@@ -1,25 +1,18 @@
 package com.tensquare.user.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.tensquare.user.pojo.Admin;
 import com.tensquare.user.service.AdminService;
-
 import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
+import io.jsonwebtoken.Claims;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 import util.JwtUtil;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 控制器层
@@ -27,12 +20,15 @@ import util.JwtUtil;
  * @author Administrator
  */
 @RestController
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
+    @Resource
     private AdminService adminService;
+
+    @Resource
+    private JwtUtil jwtUtil;
 
     /**
      * 查询全部数据
@@ -82,9 +78,11 @@ public class AdminController {
 
     /**
      * 增加
+     * <p>
+     * //@RequestBody Admin admin
      */
-    @RequestMapping(value = "add", method = RequestMethod.POST)
-    public Result add(@RequestBody Admin admin) {
+    @RequestMapping("add")
+    public Result add() {
         return new Result(true, StatusCode.OK, "增加成功");
     }
 
@@ -111,29 +109,45 @@ public class AdminController {
         return new Result(true, StatusCode.OK, "删除成功");
     }
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
     /**
      * 管理员登录
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)//
     public Result login(@RequestBody Map<String, String> map) {
         Admin admin = adminService.login(map);
-        if (admin == null) {
+        if (admin != null) {
+            if (!admin.getState().equals("1")) {
+                return new Result(false, StatusCode.USER_PASS_ERROR, "账号未激活，请联系管理员激活");
+            }
             //登录成功
             //给前端签发Token
             String token = jwtUtil.createJWT(admin.getId(), admin.getLoginname(), "admin");
-            //打印token
-            System.out.println("token:" + token);
             //把token返回给前端
-            Map<String, String> result = new HashMap<>();
+            Map<String, String> result = new HashMap<String, String>();
             result.put("name", admin.getLoginname());
             result.put("token", token);
-
+            map.put("name", admin.getLoginname());    //map中存放管理员对应的JWT的token,并返回给前台
             return new Result(true, StatusCode.OK, "登录成功", result);
         } else {
             return new Result(false, StatusCode.USER_PASS_ERROR, "用户名或者密错误");
         }
+    }
+
+    /**
+     * 返回管理员信息 /admin/info
+     *
+     * @param token
+     * @return
+     */
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public Result getInfo(@RequestParam("token") String token) {
+        //解析token后获得管理员id
+        Claims claims = jwtUtil.parseJWT(token);
+        Map map = new HashMap();
+        map.put("roles", claims.get("roles"));
+        String id = claims.getId();
+        Admin admin = adminService.findById(id);
+        map.put("loginname", admin.getLoginname());
+        return new Result(true, StatusCode.OK, "查询成功", map);
     }
 }

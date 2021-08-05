@@ -11,6 +11,7 @@ import util.IdWorker;
 @SpringBootApplication
 @EnableScheduling
 public class UserCrawlerApplication {
+
     @Value("${redis.host}")
     private String redis_host;
 
@@ -28,5 +29,4 @@ public class UserCrawlerApplication {
     public RedisScheduler redisScheduler() {
         return new RedisScheduler(redis_host);
     }
-
 }

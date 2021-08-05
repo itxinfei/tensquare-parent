@@ -2,11 +2,15 @@ server:
   port: 9006
 spring:
   application:
-    name: tensquare_spit #指定服务名
+    name: tensquare-spit #指定服务名
   data:
     mongodb:
-      host: 192.168.66.133
+      host: 47.94.207.39
       port: 27017
       database: spitdb
   redis:
-    host: 192.168.66.133
+    host: 47.94.207.39
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:6868/eureka   #指定Eureka注册地址

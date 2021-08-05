@@ -2,19 +2,68 @@ server:
   port: 9011
 spring:
   application:
-    name: temsquare-web-gateway
+    name: tensquare-web-gateway
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:6868/eureka  #指定Eureka注册地址
+      defaultZone: http://localhost:6868/eureka  #指定Eureka注册地址
+  instance:
+    prefer-ip-address: true
 zuul:
   routes:
-    tensquare-base:
-      path: /label/**   #拦截路径
-      serviceId: tensquare-base  #微服务的名称
-    tensquare-qa:
-      path: /qa/**
-      serviceId: tensquare-qa
-    tensquare-user:
-      path: /user/**
-      serviceId: tensquare-user
+    tensquare-gathering: #活动
+      path: /gathering/** #配置请求URL的请求规则
+      serviceId: tensquare-gathering #指定Eureka注册中心中的服务id
+    tensquare-article: #文章
+      path: /article/** #配置请求URL的请求规则
+      serviceId: tensquare-article #指定Eureka注册中心中的服务id
+    tensquare-base: #基础
+      path: /base/** #配置请求URL的请求规则
+      serviceId: tensquare-base #指定Eureka注册中心中的服务id
+    tensquare-friend: #交友
+      path: /friend/** #配置请求URL的请求规则
+      serviceId: tensquare-friend #指定Eureka注册中心中的服务id
+    tensquare-qa: #问答
+      path: /qa/** #配置请求URL的请求规则
+      serviceId: tensquare-qa #指定Eureka注册中心中的服务id
+    tensquare-recruit: #招聘
+      path: /recruit/** #配置请求URL的请求规则
+      serviceId: tensquare-recruit #指定Eureka注册中心中的服务id
+    tensquare-spit: #吐槽
+      path: /spit/** #配置请求URL的请求规则
+      serviceId: tensquare-spit #指定Eureka注册中心中的服务id
+    tensquare-user: #用户
+      path: /user/** #配置请求URL的请求规则
+      serviceId: tensquare-user #指定Eureka注册中心中的服务id
+    tensquare-search: #搜索
+      path: /search/** #配置请求URL的请求规则
+      serviceId: tensquare-search  #指定Eureka注册中心中的服务id
+    tensquare-chat: #聊天微服务
+      path: /chat/**
+      serviceId: tensquare-chat
+    tensquare-notice: #通知微服务
+      path: /notice/**
+      serviceId: tensquare-notice
+
+    host:
+      connect-timeout-millis: 10000
+      socket-timeout-millis: 60000
+
+  add-host-header: true         # 网关转发时，携带头信息
+  #需要忽略的头部信息，不在传播到其他服务
+  sensitive-headers: Access-Control-Allow-Origin
+  ignored-headers: Access-Control-Allow-Origin,H-APP-Id,Token,APPToken
+
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 60000
+#
+#ribbon:
+#  eureka:
+#    enabled: true
+#  ReadTimeout: 3000
+#  ConnectTimeout: 3000

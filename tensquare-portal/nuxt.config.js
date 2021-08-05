@@ -14,9 +14,9 @@ module.exports = {
     ]
   },
   plugins: [
-    { src:'~plugins/vue-infinite-scroll.js' ,ssr: false},
-    { src:'~plugins/element-ui.js' ,ssr: false},
-    { src: '~plugins/nuxt-quill-plugin.js', ssr: false }
+   { src:'~plugins/vue-infinite-scroll.js' ,ssr: false},
+   { src:'~plugins/element-ui.js' ,ssr: false},
+   { src:'~plugins/nuxt-quill-plugin.js', ssr: false }
   ],
   css: [
     'element-ui/lib/theme-chalk/index.css',

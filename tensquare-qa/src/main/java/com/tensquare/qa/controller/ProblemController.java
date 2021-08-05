@@ -23,7 +23,7 @@ import entity.StatusCode;
  *
  */
 @RestController
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("/problem")
 public class ProblemController {
 

@@ -1,9 +1,31 @@
+server:
+  port: 9001
 spring:
-  cloud:
-    config:
-      uri: http://127.0.0.1:12000  #配置中心服务端
-      name: base  #应用名称
-      profile: dev  #环境代号
-      label: master  #git的分支名称
+  application:
+    name: tensquare-base #指定服务模块名，基础微服务
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tensquare_base?characterEncoding=utf-8
+    username: root
+    password: root
+  jpa:
+    database: mysql
+    show-sql: true
+    #generate-ddl: true   #这里不需要自动创建表
   rabbitmq:
-    host: 192.168.66.133
+    host: 47.94.207.39
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:6868/eureka
+  instance:
+    prefer-ip-address: true
+#spring:
+#  cloud:
+#    config:
+#      uri: http://127.0.0.1:12000  #配置中心服务端
+#      name: base  #应用名称
+#      profile: dev  #环境代号
+#      label: master  #git的分支名称
+#  rabbitmq:
+#    host: 47.94.207.39

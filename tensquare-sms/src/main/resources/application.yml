@@ -2,9 +2,9 @@ server:
   port: 9009
 spring:
   application:
-    name: tensquare_sms
+    name: tensquare-sms
   rabbitmq:
-    host: 192.168.66.133
+    host: 47.94.207.39
 aliyun:
   sms:
     tempCode: SMS_100735040

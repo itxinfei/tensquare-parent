@@ -9,18 +9,18 @@ import org.springframework.context.annotation.Bean;
 /**
  * 基础微服务的启动类
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class)
 @EnableEurekaClient
 public class BaseApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BaseApplication.class,args);
+        SpringApplication.run(BaseApplication.class, args);
     }
 
     /**
      * 初始化IdWorder对象
      */
     @Bean
-    public IdWorker idWorker(){
-        return new IdWorker(1,1);
+    public IdWorker idWorker() {
+        return new IdWorker(1, 1);
     }
 }

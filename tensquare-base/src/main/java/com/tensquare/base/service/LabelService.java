@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -20,56 +21,56 @@ import java.util.Map;
 @Service
 public class LabelService {
 
-    @Autowired
+    @Resource
     private LabelDao labelDao;
 
-    @Autowired
+    @Resource
     private IdWorker idWorker;
 
     /**
      * 查询所有
      */
-    public List<Label> findAll(){
+    public List<Label> findAll() {
         return labelDao.findAll();
     }
 
     /**
      * 查询一个
      */
-    public Label findById(String id){
+    public Label findById(String id) {
         return labelDao.findById(id).get();
     }
 
     /**
      * 添加
      */
-    public void add(Label label){
+    public void add(Label label) {
         //使用idWorker获取一个值
-        label.setId(idWorker.nextId()+"");
+        label.setId(idWorker.nextId() + "");
         labelDao.save(label);
     }
 
     /**
      * 修改
      */
-    public void update(Label label){
+    public void update(Label label) {
         labelDao.save(label);
     }
 
     /**
      * 删除
      */
-    public void deleteById(String id){
+    public void deleteById(String id) {
         labelDao.deleteById(id);
     }
 
     /**
      * 创建Specification
      */
-    private Specification<Label> createSpecification(Map searchMap){
+    private Specification<Label> createSpecification(Map searchMap) {
 
         //提供匿名内部类
-        return new Specification<Label>(){
+        return new Specification<Label>() {
 
             /**
              *
@@ -84,21 +85,21 @@ public class LabelService {
                 List<Predicate> preList = new ArrayList<>();
 
                 //根据labelname进行模糊搜索
-                if(searchMap.get("labelname")!=null && !searchMap.get("labelname").equals("")){
+                if (searchMap.get("labelname") != null && !searchMap.get("labelname").equals("")) {
                     //把查询条件放入predicateList集合
-                    preList.add(criteriaBuilder.like(root.get("labelname").as(String.class),"%"+searchMap.get("labelname")+"%"));
+                    preList.add(criteriaBuilder.like(root.get("labelname").as(String.class), "%" + searchMap.get("labelname") + "%"));
                 }
 
                 //根据state查询
-                if(searchMap.get("state")!=null && !searchMap.get("state").equals("")){
+                if (searchMap.get("state") != null && !searchMap.get("state").equals("")) {
                     //把查询条件放入predicateList集合
-                    preList.add(criteriaBuilder.like(root.get("state").as(String.class),searchMap.get("state")+""));
+                    preList.add(criteriaBuilder.like(root.get("state").as(String.class), searchMap.get("state") + ""));
                 }
 
                 //根据recommend查询
-                if(searchMap.get("recommend")!=null && !searchMap.get("recommend").equals("")){
+                if (searchMap.get("recommend") != null && !searchMap.get("recommend").equals("")) {
                     //把查询条件放入predicateList集合
-                    preList.add(criteriaBuilder.like(root.get("recommend").as(String.class),searchMap.get("recommend")+""));
+                    preList.add(criteriaBuilder.like(root.get("recommend").as(String.class), searchMap.get("recommend") + ""));
                 }
 
                 Predicate[] preArray = new Predicate[preList.size()];
@@ -111,6 +112,7 @@ public class LabelService {
 
     /**
      * 条件查询
+     *
      * @param searchMap
      * @return
      */
@@ -123,6 +125,7 @@ public class LabelService {
 
     /**
      * 条件+分页
+     *
      * @param searchMap
      * @param page
      * @param size
@@ -133,5 +136,34 @@ public class LabelService {
         Specification<Label> spec = createSpecification(searchMap);
         //注意：Spring Data JPA的page从0开始
         return labelDao.findAll(spec, PageRequest.of(page - 1, size));
+    }
+
+
+    /**
+     * 查询推荐标签列表
+     *
+     * @return
+     */
+    public List<Label> findTopList() {
+        return labelDao.findAllByRecommend("1");
+    }
+
+    /**
+     * 查询有效标签列表
+     *
+     * @return
+     */
+    public List<Label> findList() {
+        return labelDao.findAllByState("1");
+    }
+
+    /*查询热门标签列表*/
+    public List<Label> findhotlist() {
+        return labelDao.findTop6ByCount();
+    }
+
+    //查询我关注的标签列表
+    public List<String> getMyLabels(String me) {
+        return labelDao.getMyLabels(me);
     }
 }

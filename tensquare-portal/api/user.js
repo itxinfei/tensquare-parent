@@ -5,7 +5,7 @@ export default {
     sendsms(mobile){
         return request({
             url:`/${group_name}/${api_name}/sendsms/${mobile}`,
-            method: 'put'
+            method: 'post'
         })
     },
     register(user,code){
